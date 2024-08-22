@@ -15,6 +15,18 @@
         <module>order</module>
         <module>product</module>
         <module>warehouse</module>
+        <module>infrastructure</module>
     </modules>
-
+    <properties>
+        <spring.mybatis.starter.version>3.0.3</spring.mybatis.starter.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${spring.mybatis.starter.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
