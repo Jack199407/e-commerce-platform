@@ -9,9 +9,5 @@ spring:
     username: root
     password: Zk@041916
     driver-class-name: com.mysql.jdbc.Driver
-  cloud:
-    nacos:
-      config:
-        server-addr: 127.0.0.1:8848
 
 

@@ -28,21 +28,21 @@ import java.sql.SQLException;
 @EnableTransactionManagement(proxyTargetClass = true)
 @PropertySource(ignoreResourceNotFound = true, value = {"classpath:jdbc-mysql.properties"})
 @ComponentScan("com.ecommerce.infrastructure.repository")
-@MapperScan(basePackages = {"com.ecommerce.infrastructure.repository.mapper.order"},
-        sqlSessionFactoryRef = "orderSqlSessionFactory")
-public class OrderDataSourceConfiguration {
+@MapperScan(basePackages = {"com.ecommerce.infrastructure.repository.mapper.member"},
+        sqlSessionFactoryRef = "memberSqlSessionFactory")
+public class MemberDataSourceConfiguration {
 
-    @Bean(name = "orderDataSource")
+    @Bean(name = "memberDataSource")
     public DataSource getDataSource(
             @Value("${jdbc.driverClassName:com.mysql.jdbc.Driver}") final String driverClassName,
-            @Value("${jdbc.order.url:jdbc:mysql://localhost:3306/order?zeroDateTimeBehavior=convertToNull&characterEncoding=utf8&allowMultiQueries=true&useSSL=false}") final String polarJdbcUrl,
-            @Value("${jdbc.order.username:root}") final String polarUsername,
-            @Value("${jdbc.order.password:Zk@041916}") final String polarPassword,
-            @Value("${jdbc.order.testQuery:#{'select 1 from dual'}}") final String testQuery,
-            @Value("${jdbc.order.connectionTimeout:30000}") final int connectionTimeout,
-            @Value("${jdbc.order.idleTimeout:600000}") final int idleTimeout,
-            @Value("${jdbc.order.maxPoolSize:10}") final int maxPoolSize,
-            @Value("${jdbc.order.minimumIdle:1}") final int minimumIdle) throws SQLException {
+            @Value("${jdbc.member.url:jdbc:mysql://localhost:3306/member?zeroDateTimeBehavior=convertToNull&characterEncoding=utf8&allowMultiQueries=true&useSSL=false}") final String polarJdbcUrl,
+            @Value("${jdbc.member.username:root}") final String polarUsername,
+            @Value("${jdbc.member.password:Zk@041916}") final String polarPassword,
+            @Value("${jdbc.member.testQuery:#{'select 1 from dual'}}") final String testQuery,
+            @Value("${jdbc.member.connectionTimeout:30000}") final int connectionTimeout,
+            @Value("${jdbc.member.idleTimeout:600000}") final int idleTimeout,
+            @Value("${jdbc.member.maxPoolSize:10}") final int maxPoolSize,
+            @Value("${jdbc.member.minimumIdle:1}") final int minimumIdle) throws SQLException {
         final HikariConfig config = new HikariConfig();
         config.setDriverClassName(driverClassName);
         config.setJdbcUrl(polarJdbcUrl);
@@ -63,39 +63,39 @@ public class OrderDataSourceConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "orderSqlSessionFactory")
+    @Bean(name = "memberSqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean(
-            @Autowired @Qualifier(value = "orderDataSource") final DataSource dataSource)
+            @Autowired @Qualifier(value = "memberDataSource") final DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:mapper/order/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath*:mapper/member/*.xml"));
         sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "orderTransactionManager")
-    public PlatformTransactionManager orderTransactionManager(
-            @Autowired @Qualifier(value = "orderDataSource") final DataSource dataSource) {
+    @Bean(name = "memberTransactionManager")
+    public PlatformTransactionManager memberTransactionManager(
+            @Autowired @Qualifier(value = "memberDataSource") final DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = "orderTransactionTemplate")
-    public TransactionTemplate orderTransactionTemplate(
-            @Autowired @Qualifier(value = "orderTransactionManager")
-            PlatformTransactionManager orderTransactionManager) {
-        return new TransactionTemplate(orderTransactionManager);
+    @Bean(name = "memberTransactionTemplate")
+    public TransactionTemplate memberTransactionTemplate(
+            @Autowired @Qualifier(value = "memberTransactionManager")
+            PlatformTransactionManager memberTransactionManager) {
+        return new TransactionTemplate(memberTransactionManager);
     }
 
     /**
      * 定义一个编程式事务，其传播行为为REQUIRED
      */
-    @Bean(name = "orderTransactionPropagationTemplate")
-    public TransactionTemplate orderTransactionPropagationTemplate(
-            @Autowired @Qualifier(value = "orderTransactionManager")
-            PlatformTransactionManager orderTransactionManager) {
-        TransactionTemplate template = new TransactionTemplate(orderTransactionManager);
+    @Bean(name = "memberTransactionPropagationTemplate")
+    public TransactionTemplate memberTransactionPropagationTemplate(
+            @Autowired @Qualifier(value = "memberTransactionManager")
+            PlatformTransactionManager memberTransactionManager) {
+        TransactionTemplate template = new TransactionTemplate(memberTransactionManager);
         template.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         return template;
     }
