@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ecommerce-coupon
+  datasource:
+    url: jdbc:mysql://localhost:3306/order?zeroDateTimeBehavior=convertToNull&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: Zk@041916
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+
+

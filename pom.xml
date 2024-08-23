@@ -18,7 +18,9 @@
         <module>infrastructure</module>
     </modules>
     <properties>
-        <spring.mybatis.starter.version>3.0.3</spring.mybatis.starter.version>
+        <spring.mybatis.starter.version>2.3.2</spring.mybatis.starter.version>
+        <mysql-connector-java.version>8.0.26</mysql-connector-java.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -26,6 +28,23 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${spring.mybatis.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>2.2.0.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
