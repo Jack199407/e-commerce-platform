@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecommerce.infrastructure.repository.mapper.order.OrdersBizMapper">
+  <resultMap id="BaseResultMap" type="com.ecommerce.infrastructure.repository.model.order.Orders">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="order_number" jdbcType="CHAR" property="orderNumber" />
+    <result column="pay_amount" jdbcType="DECIMAL" property="payAmount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, member_id, order_number, pay_amount, create_time, update_time, isdel
+  </sql>
+  <insert id="insertBatch">
+    insert into order.orders
+    (member_id, order_number, pay_amount)
+    values
+    <foreach collection="records" item="record" separator=",">
+      (#{record.memberId}, #{record.orderNumber}, #{record.payAmount})
+    </foreach>
+  </insert>
+  <select id="listByMemberIdOrders" resultType="com.ecommerce.infrastructure.repository.model.order.Orders">
+    select
+    <include refid="Base_Column_List"/>
+    from order.orders
+    where member_id in
+    <foreach collection="memberIds" open="(" separator="," close=")" item="memberId" >
+      #{memberId}
+    </foreach>
+    and isdel = 0
+  </select>
+
+</mapper>
