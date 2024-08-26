@@ -21,4 +21,9 @@ public class OrderController {
         ordersBizMapper.insertBatch(orders);
         return "success";
     }
+
+    @PostMapping("/queryByMemberIds")
+    public List<Orders> queryByMemberIds(@RequestBody List<Long> memberIds) {
+        return ordersBizMapper.listByMemberIdOrders(memberIds);
+    }
 }
