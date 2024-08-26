@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@SpringBootApplication(scanBasePackages = {"com.ecommerce.infrastructure"})
+@SpringBootApplication(scanBasePackages = {"com.ecommerce"})
 @EnableFeignClients(basePackages = "com.ecommerce.member.feign")
 public class MemberApplication {
 
