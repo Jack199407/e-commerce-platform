@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@FeignClient("ECOMMERCE-ORDER")
+@FeignClient(name = "ECOMMERCE-ORDER", path = "/order")
 public interface OrdersFeignAdapter {
 
-    @RequestMapping("/order/queryByMemberIds")
+    @RequestMapping("/queryByMemberIds")
     List<Orders>  queryOrdersByMemberIds(List<Long> memberIds);
 
 }
